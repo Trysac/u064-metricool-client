@@ -1,21 +1,29 @@
-"""Typed Python client core for the Metricool API: schedule posts, page through comments, export them to CSV with formula-injection protection"""
+"""Typed client core for the Metricool API."""
 
 from __future__ import annotations
 
-__all__ = ["__version__", "normalize"]
+import logging
+
+from ._client import MetricoolClient
+from ._csv import export_comments_csv
+from ._errors import ErrorCode, MetricoolError
+from ._models import KNOWN_NETWORKS, Comment, PostDraft
+from ._transport import HttpResponse, Transport, UrllibTransport
+
+__all__ = [
+    "KNOWN_NETWORKS",
+    "Comment",
+    "ErrorCode",
+    "HttpResponse",
+    "MetricoolClient",
+    "MetricoolError",
+    "PostDraft",
+    "Transport",
+    "UrllibTransport",
+    "__version__",
+    "export_comments_csv",
+]
 
 __version__ = "0.1.0"
 
-
-def normalize(value: str) -> str:
-    """Return ``value`` trimmed and lower-cased.
-
-    Placeholder API created by the template: replace it with the utility's real behavior.
-
-    Raises:
-        ValueError: if ``value`` is empty or only whitespace.
-    """
-    cleaned = value.strip()
-    if not cleaned:
-        raise ValueError("value must not be empty")
-    return cleaned.lower()
+logging.getLogger(__name__).addHandler(logging.NullHandler())
